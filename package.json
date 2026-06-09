@@ -1,0 +1,45 @@
+{
+  "name": "practice-project-template",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A template with Webpack, ESLint and Prettier.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vdermann/practice-project-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vdermann/practice-project-template/issues"
+  },
+  "homepage": "https://github.com/vdermann/practice-project-template#readme",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.0.0",
+    "css-loader": "^7.1.4",
+    "eslint": "^9.0.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "gh-pages": "^6.3.0",
+    "globals": "^16.0.0",
+    "html-webpack-plugin": "^5.6.7",
+    "prettier": "^3.8.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^7.0.3",
+    "webpack-dev-server": "^5.2.4",
+    "webpack-merge": "^6.0.1"
+  }
+}

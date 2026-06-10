@@ -1,27 +1,29 @@
-import path from "node:path";
-import HtmlWebpackPlugin from "html-webpack-plugin";
+import path from 'node:path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-  entry: "./src/index.js",
+  entry: './src/js/index.js',
   output: {
-    filename: "main.js",
-    path: path.resolve(import.meta.dirname, "dist"),
+    filename: 'main.js',
+    path: path.resolve(import.meta.dirname, 'dist'),
     clean: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/template.html",
+      template: './src/template.html',
     }),
   ],
   module: {
     rules: [
-      { // To load the CSS.
+      {
+        // To load the CSS.
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
-      { // To use local files in the JS.
+      {
+        // To use local files in the JS.
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },

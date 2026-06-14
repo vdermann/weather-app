@@ -1,7 +1,6 @@
 {
   "name": "practice-project-template",
   "version": "1.0.0",
-  "type": "module",
   "description": "A template with Webpack, ESLint and Prettier.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,11 +1,21 @@
 function getDayName(dateString) {
   // By adding "T00:00:00Z" we ensure that it takes the exact UTC date
-  // and does not change the day due to your time zone.
+  // and does not change the day due to a time zone.
   const date = new Date(`${dateString}T00:00:00Z`);
 
-  const shortName = { weekday: 'short' };
-  const dayName = new Intl.DateTimeFormat('en', shortName).format(date);
+  const options = { weekday: 'short', timeZone: 'UTC' };
+  const dayName = new Intl.DateTimeFormat('en', options).format(date);
   return dayName;
+}
+
+function getDate(dateString) {
+  // By adding "T00:00:00Z" we ensure that it takes the exact UTC date
+  // and does not change the day due to a time zone.
+  const date = new Date(`${dateString}T00:00:00Z`);
+
+  const options = { day: 'numeric', month: 'short', timeZone: 'UTC' };
+  const formattedDate = new Intl.DateTimeFormat('en', options).format(date);
+  return formattedDate;
 }
 
 function createDayCard(data) {
@@ -33,6 +43,11 @@ function createDayCard(data) {
 
   // Adding the information to the elements.
   name.textContent = getDayName(datetime);
+  date.textContent = getDate(datetime);
+  isvg.textContent = icon;
+  desc.textContent = conditions;
+  maxTempSpan.textContent = tempmax;
+  minTempSpan.textContent = tempmin;
 
   // Putting it all together.
   temps.append(maxTempSpan, minTempSpan);
@@ -48,9 +63,12 @@ function buildWeeklyForecast(data) {
   forecastGrid.classList.add('forecast__grid');
 
   const title = document.createElement('h2');
+  title.classList.add('forecast__heading');
+  title.textContent = 'Forecast for the next 7 days';
 
   daysArray.forEach((dayObj) => {
-    forecastGrid.append(createDayCard(dayObj));
+    const card = createDayCard(dayObj);
+    forecastGrid.append(card);
   });
 
   section.append(title, forecastGrid);

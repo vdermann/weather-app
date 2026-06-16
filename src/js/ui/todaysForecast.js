@@ -18,11 +18,12 @@ function createMetricCard(label, value) {
   return card;
 }
 
-function buildTodaysForecast(data, description) {
+function buildTodaysForecast(location, data, description) {
   const {
     temp,
     feelslike,
     conditions,
+    icon,
     humidity,
     windspeed,
     uvindex,
@@ -44,12 +45,25 @@ function buildTodaysForecast(data, description) {
   todaysForecastSection.classList.add('current');
 
   // LEFT SIDE.
+  // Getting today's date.
+  const today = new Date();
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const formattedDate = today.toLocaleDateString('en', options);
+
   // First Row: for the location name and the current date.
   const infoRow = document.createElement('div');
   const cityNameDiv = document.createElement('div');
   const currentDateDiv = document.createElement('div');
   cityNameDiv.classList.add('current__city');
   currentDateDiv.classList.add('current__date');
+  cityNameDiv.textContent = location;
+  currentDateDiv.textContent =
+    formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
   infoRow.append(cityNameDiv, currentDateDiv);
 
   // Second Row: for the temperature, the conditions and the main icon.
@@ -62,6 +76,9 @@ function buildTodaysForecast(data, description) {
   currentTempDiv.classList.add('current__temp');
   currentCondDiv.classList.add('current__cond');
   tempRow.classList.add('current__temp-row');
+  mainIcon.textContent = icon;
+  currentTempDiv.textContent = temp;
+  currentCondDiv.textContent = conditions;
   columnWrapper.append(currentTempDiv, currentCondDiv);
   tempRow.append(mainIcon, columnWrapper);
 

@@ -1,6 +1,5 @@
 import loadIcon from './icons';
 
-// UI.
 function createMetricCard(label, value) {
   const card = document.createElement('div');
   card.classList.add('metric-card');

@@ -1,4 +1,5 @@
 const VALID_ICONS = new Set([
+  // Conditions
   'clear-day',
   'clear-night',
   'rain',
@@ -11,6 +12,9 @@ const VALID_ICONS = new Set([
   'partly-cloudy-night',
   'thunder',
   'thunder-rain',
+  // Others
+  'search',
+  'calendar',
 ]);
 
 // Fallback in case the API returns an unexpected value.

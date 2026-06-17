@@ -1,3 +1,5 @@
+import loadIcon from './icons';
+
 function getDayName(dateString) {
   // By adding "T00:00:00Z" we ensure that it takes the exact UTC date
   // and does not change the day due to a time zone.
@@ -18,7 +20,7 @@ function getDate(dateString) {
   return formattedDate;
 }
 
-function createDayCard(data) {
+async function createDayCard(data) {
   const { datetime, icon, conditions, tempmax, tempmin } = data;
 
   // HTML Elements Variables.
@@ -42,9 +44,9 @@ function createDayCard(data) {
   minTempSpan.classList.add('day-card__temp', 'day-card__temp--min');
 
   // Adding the information to the elements.
+  isvg.innerHTML = await loadIcon(icon);
   name.textContent = getDayName(datetime);
   date.textContent = getDate(datetime);
-  isvg.textContent = icon;
   desc.textContent = conditions;
   maxTempSpan.textContent = tempmax;
   minTempSpan.textContent = tempmin;
@@ -55,7 +57,7 @@ function createDayCard(data) {
   return card;
 }
 
-function buildWeeklyForecast(data) {
+async function buildWeeklyForecast(data) {
   const daysArray = data;
   const section = document.createElement('section');
   const forecastGrid = document.createElement('div');
@@ -66,10 +68,10 @@ function buildWeeklyForecast(data) {
   title.classList.add('forecast__heading');
   title.textContent = 'Forecast for the next 7 days';
 
-  daysArray.forEach((dayObj) => {
-    const card = createDayCard(dayObj);
-    forecastGrid.append(card);
-  });
+  const cards = await Promise.all(
+    daysArray.map((dayObj) => createDayCard(dayObj))
+  );
+  cards.forEach((card) => forecastGrid.append(card));
 
   section.append(title, forecastGrid);
   return section;

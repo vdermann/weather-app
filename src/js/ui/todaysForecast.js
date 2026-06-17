@@ -1,3 +1,5 @@
+import loadIcon from './icons';
+
 // UI.
 function createMetricCard(label, value) {
   const card = document.createElement('div');
@@ -7,7 +9,7 @@ function createMetricCard(label, value) {
   labelDiv.classList.add('metric-card__label');
   valueDiv.classList.add('metric-card__value');
 
-  if (label !== 'Feels like' || label !== 'Conditions') {
+  if (label !== 'Feels like' && label !== 'Conditions') {
     card.classList.add('metric-card--secondary');
   }
 
@@ -18,7 +20,7 @@ function createMetricCard(label, value) {
   return card;
 }
 
-function buildTodaysForecast(location, data, description) {
+async function buildTodaysForecast(location, data, description) {
   const {
     temp,
     feelslike,
@@ -33,6 +35,7 @@ function buildTodaysForecast(location, data, description) {
 
   console.log(temp);
   console.log(`Description: ${description}`);
+  console.log(`Icon: ${icon}`);
 
   // Main card (Today's Forecast).
   const container = document.createElement('div');
@@ -76,7 +79,7 @@ function buildTodaysForecast(location, data, description) {
   currentTempDiv.classList.add('current__temp');
   currentCondDiv.classList.add('current__cond');
   tempRow.classList.add('current__temp-row');
-  mainIcon.textContent = icon;
+  mainIcon.innerHTML = await loadIcon(icon);
   currentTempDiv.textContent = temp;
   currentCondDiv.textContent = conditions;
   columnWrapper.append(currentTempDiv, currentCondDiv);

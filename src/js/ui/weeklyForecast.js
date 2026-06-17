@@ -1,3 +1,4 @@
+import convertTemp from '../utils/temperature';
 import loadIcon from './icons';
 
 function getDayName(dateString) {
@@ -20,7 +21,7 @@ function getDate(dateString) {
   return formattedDate;
 }
 
-async function createDayCard(data) {
+async function createDayCard(data, currentUnit) {
   const { datetime, icon, conditions, tempmax, tempmin } = data;
 
   // HTML Elements Variables.
@@ -48,8 +49,8 @@ async function createDayCard(data) {
   name.textContent = getDayName(datetime);
   date.textContent = getDate(datetime);
   desc.textContent = conditions;
-  maxTempSpan.textContent = tempmax;
-  minTempSpan.textContent = tempmin;
+  maxTempSpan.textContent = `${convertTemp(tempmax, currentUnit)}°${currentUnit}`;
+  minTempSpan.textContent = `${convertTemp(tempmin, currentUnit)}°${currentUnit}`;
 
   // Putting it all together.
   temps.append(maxTempSpan, minTempSpan);
@@ -57,7 +58,7 @@ async function createDayCard(data) {
   return card;
 }
 
-async function buildWeeklyForecast(data) {
+async function buildWeeklyForecast(data, currentUnit) {
   const daysArray = data;
   const section = document.createElement('section');
   const forecastGrid = document.createElement('div');
@@ -66,10 +67,10 @@ async function buildWeeklyForecast(data) {
 
   const title = document.createElement('h2');
   title.classList.add('forecast__heading');
-  title.textContent = 'Forecast for the next 7 days';
+  title.innerHTML = `${await loadIcon('calendar')} Forecast for the next 7 days`;
 
   const cards = await Promise.all(
-    daysArray.map((dayObj) => createDayCard(dayObj))
+    daysArray.map((dayObj) => createDayCard(dayObj, currentUnit))
   );
   cards.forEach((card) => forecastGrid.append(card));
 

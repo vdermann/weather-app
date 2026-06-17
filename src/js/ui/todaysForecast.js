@@ -1,3 +1,4 @@
+import convertTemp from '../utils/temperature';
 import loadIcon from './icons';
 
 function createMetricCard(label, value) {
@@ -19,7 +20,7 @@ function createMetricCard(label, value) {
   return card;
 }
 
-async function buildTodaysForecast(location, data, description) {
+async function buildTodaysForecast(location, data, description, currentUnit) {
   const {
     temp,
     feelslike,
@@ -31,10 +32,6 @@ async function buildTodaysForecast(location, data, description) {
     sunrise,
     sunset,
   } = data;
-
-  console.log(temp);
-  console.log(`Description: ${description}`);
-  console.log(`Icon: ${icon}`);
 
   // Main card (Today's Forecast).
   const container = document.createElement('div');
@@ -79,7 +76,7 @@ async function buildTodaysForecast(location, data, description) {
   currentCondDiv.classList.add('current__cond');
   tempRow.classList.add('current__temp-row');
   mainIcon.innerHTML = await loadIcon(icon);
-  currentTempDiv.textContent = temp;
+  currentTempDiv.textContent = `${convertTemp(temp, currentUnit)}°${currentUnit}`;
   currentCondDiv.textContent = conditions;
   columnWrapper.append(currentTempDiv, currentCondDiv);
   tempRow.append(mainIcon, columnWrapper);
@@ -97,7 +94,10 @@ async function buildTodaysForecast(location, data, description) {
   const primaryMetrics = document.createElement('div');
   primaryMetrics.classList.add('metric-group', 'metric-group--primary');
   primaryMetrics.append(
-    createMetricCard('Feels like', feelslike),
+    createMetricCard(
+      'Feels like',
+      `${convertTemp(feelslike, currentUnit)}°${currentUnit}`
+    ),
     createMetricCard('Conditions', conditions)
   );
 

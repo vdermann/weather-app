@@ -39,9 +39,15 @@ body {
   margin-bottom: 2rem;
 }
 
+.form__button svg,
+.forecast__heading svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* ─── Layout ────────────────────────────────────── */
 
-.page {
+.app {
   max-width: 960px;
   margin: 0 auto;
 }
@@ -78,7 +84,8 @@ body {
   box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.12);
 }
 
-.form__button {
+.form__button,
+.form__toggle {
   height: 44px;
   padding: 0 1.25rem;
   border-radius: var(--radius-md);
@@ -93,7 +100,8 @@ body {
   transition: background 0.15s;
 }
 
-.form__button:hover {
+.form__button:hover,
+.form__toggle:hover {
   background: var(--bg-subcard);
 }
 
@@ -117,11 +125,10 @@ body {
 .current__info {
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .current__city {
-  font-size: 20px;
+  font-size: 36px;
   font-weight: 400;
 }
 .current__date {
@@ -134,10 +141,10 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 4px;
 }
 
-.current__icon {
+.current__icon svg {
+  width: 140px;
   font-size: 56px;
   line-height: 1;
 }
@@ -156,7 +163,7 @@ body {
   font-size: 13px;
   color: var(--text-tertiary);
   line-height: 1.6;
-  margin-top: 8px;
+  margin-top: -10px;
   max-width: 300px;
 }
 
@@ -164,12 +171,14 @@ body {
 .current__metrics {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
 }
 
 /* ─── Metric cards ───────────────────────────────── */
 
 .metric-group {
+  /* flex: 1; */
   display: grid;
   gap: 10px;
 }
@@ -182,6 +191,7 @@ body {
 }
 
 .metric-card {
+  align-content: center;
   background: var(--bg-subcard);
   border: var(--border);
   border-radius: var(--radius-md);
@@ -189,7 +199,7 @@ body {
 }
 
 .metric-card--secondary {
-  padding: 10px 8px;
+  padding: 14px 18px;
   text-align: center;
 }
 

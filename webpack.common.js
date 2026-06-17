@@ -25,6 +25,11 @@ export default {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
+      {
+        // To use animated svg's.
+        test: /\.svg$/,
+        type: 'asset/source',
+      },
     ],
   },
 };

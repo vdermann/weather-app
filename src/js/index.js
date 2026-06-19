@@ -24,6 +24,12 @@ async function getWeatherData(url) {
   }
 }
 
+// Reset
+function reset(section) {
+  const page = section;
+  page.innerHTML = '';
+}
+
 // Building the initial UI.
 async function buildPage() {
   const body = document.querySelector('body');
@@ -56,12 +62,7 @@ async function buildPage() {
   return { form, input, main, toggleBtn };
 }
 
-// Reset
-function reset(section) {
-  const page = section;
-  page.innerHTML = '';
-}
-
+// Render.
 async function render(main, data, unit) {
   reset(main);
   const { address, currentConditions, days, description } = data;
@@ -90,6 +91,7 @@ async function init() {
     console.log(cachedData);
 
     await render(main, cachedData, currentUnit);
+    input.value = '';
   });
 
   toggleBtn.addEventListener('click', async () => {

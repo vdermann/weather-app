@@ -53,6 +53,9 @@ async function buildTodaysForecast(location, data, description, currentUnit) {
     day: 'numeric',
   };
   const formattedDate = today.toLocaleDateString('en', options);
+  // Removing the seconds from the format.
+  const sunriseTime = sunrise.split(':').slice(0, 2).join(':');
+  const sunsetTime = sunset.split(':').slice(0, 2).join(':');
 
   // First Row: for the location name and the current date.
   const infoRow = document.createElement('div');
@@ -105,11 +108,11 @@ async function buildTodaysForecast(location, data, description, currentUnit) {
   const secondaryMetrics = document.createElement('div');
   secondaryMetrics.classList.add('metric-group', 'metric-group--secondary');
   secondaryMetrics.append(
-    createMetricCard('Humidity', humidity),
-    createMetricCard('Wind', windspeed),
+    createMetricCard('Humidity', `${humidity}%`),
+    createMetricCard('Wind', `${windspeed} mph`),
     createMetricCard('UV', uvindex),
-    createMetricCard('Sunrise', sunrise),
-    createMetricCard('Sunset', sunset)
+    createMetricCard('Sunrise', sunriseTime),
+    createMetricCard('Sunset', sunsetTime)
   );
 
   // Right Container.

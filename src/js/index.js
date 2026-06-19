@@ -36,6 +36,7 @@ async function buildPage() {
   const input = document.createElement('input');
   const button = document.createElement('button');
   const toggleBtn = document.createElement('button');
+  const footer = document.createElement('footer');
 
   app.classList.add('app');
   main.classList.add('main');
@@ -43,6 +44,7 @@ async function buildPage() {
   input.classList.add('form__input');
   button.classList.add('form__button');
   toggleBtn.classList.add('form__toggle');
+  footer.classList.add('footer');
 
   input.type = 'text';
   input.placeholder =
@@ -52,19 +54,30 @@ async function buildPage() {
   toggleBtn.type = 'button';
   toggleBtn.textContent = '°C / °F';
 
+  footer.innerHTML = `Built by <a href="https://github.com/vdermann" target="_blank">Deihva</a> · Data from <a href="https://www.visualcrossing.com/" target="_blank">Visual Crossing</a>`;
+
   form.append(input, button, toggleBtn);
   app.append(form, main);
-  body.append(app);
+  body.append(app, footer);
 
   return { form, input, main, toggleBtn };
 }
 
+// In case of an Error.
 function showErrorMessage(container, message) {
   reset(container);
   const errorDiv = document.createElement('div');
   errorDiv.classList.add('error-message');
   errorDiv.textContent = message;
   container.append(errorDiv);
+}
+
+// Loading Animation while waiting for the API response.
+function showLoader(container) {
+  reset(container);
+  const loader = document.createElement('div');
+  loader.classList.add('loader');
+  container.append(loader);
 }
 
 // Render.
@@ -90,6 +103,7 @@ async function init() {
     if (!location) return;
 
     const url = `${BASE_URL}${location}/next8days?key=${API_KEY}`;
+    showLoader(main);
 
     try {
       const data = await getWeatherData(url);

@@ -20,6 +20,7 @@
   --accent-light: #e6f1fb;
   --radius-md: 8px;
   --radius-lg: 14px;
+  --error: 1px solid #8a4d4b;
 }
 
 body {
@@ -50,6 +51,15 @@ body {
 .app {
   max-width: 960px;
   margin: 0 auto;
+}
+
+/* ─── Error ────────────────────────────────────── */
+
+.error-message {
+  border: var(--error);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  padding: 1.6rem;
 }
 
 /* ─── Form ────────────────────────────────────── */
@@ -98,6 +108,10 @@ body {
   align-items: center;
   gap: 6px;
   transition: background 0.15s;
+}
+
+.form__toggle {
+  font-weight: 600;
 }
 
 .form__button:hover,
@@ -199,7 +213,7 @@ body {
 }
 
 .metric-card--secondary {
-  padding: 14px 18px;
+  padding: 14px 20px;
   text-align: center;
 }
 
@@ -223,6 +237,7 @@ body {
 }
 
 .metric-card--secondary .metric-card__value {
+  white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
 }
@@ -235,9 +250,6 @@ body {
 }
 
 /* ─── Forecast section ───────────────────────────── */
-
-.forecast {
-}
 
 .forecast__heading {
   font-size: 14px;

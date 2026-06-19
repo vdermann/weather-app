@@ -11,17 +11,14 @@ const BASE_URL =
 
 // Fetch data.
 async function getWeatherData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP Error. Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return error;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(
+      `Location not found, try writing a city or location (HTTP Error, Status: ${response.status}).`
+    );
   }
+  const data = await response.json();
+  return data;
 }
 
 // Reset
@@ -62,6 +59,14 @@ async function buildPage() {
   return { form, input, main, toggleBtn };
 }
 
+function showErrorMessage(container, message) {
+  reset(container);
+  const errorDiv = document.createElement('div');
+  errorDiv.classList.add('error-message');
+  errorDiv.textContent = message;
+  container.append(errorDiv);
+}
+
 // Render.
 async function render(main, data, unit) {
   reset(main);
@@ -85,13 +90,17 @@ async function init() {
     if (!location) return;
 
     const url = `${BASE_URL}${location}/next8days?key=${API_KEY}`;
-    const data = await getWeatherData(url);
 
-    cachedData = { ...data };
-    console.log(cachedData);
-
-    await render(main, cachedData, currentUnit);
-    input.value = '';
+    try {
+      const data = await getWeatherData(url);
+      cachedData = { ...data };
+      await render(main, cachedData, currentUnit);
+      input.value = '';
+    } catch (error) {
+      showErrorMessage(main, error.message);
+      cachedData = null;
+      input.value = '';
+    }
   });
 
   toggleBtn.addEventListener('click', async () => {

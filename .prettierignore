@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vscode/
+
+package.json
+package-lock.json
+
+# Configuration files.
+eslint.config.js
